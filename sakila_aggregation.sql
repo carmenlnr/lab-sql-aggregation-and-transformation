@@ -3,8 +3,8 @@ USE sakila;
 -- 1. Challenge #1
 -- 1.1 Duración min y max de las peliculas
 SELECT 
-    MIN(length) AS min_duration,
-    MAX(length) AS max_duration
+    MAX(length) AS max_duration,
+    MIN(length) AS min_duration
 FROM film;
 -- 1.2 Duración media en horas y minutos
 SELECT 
@@ -35,14 +35,14 @@ LIMIT 20;
 -- 3. Titulos y duración de alquiler, NULL reemplazado por 'Not available'
 SELECT 
     title,
-    IFNULL(rental_duration, 'Not Available') AS rental_duration
+    IFNULL(CAST(rental_duration AS CHAR), 'Not Available') AS rental_duration
 FROM film
 ORDER BY title ASC;
 
 -- 4. bonus
 SELECT 
     CONCAT(first_name, ' ', last_name) AS full_name,
-    SUBSTRING(email, 1, 3) AS email_start
+    SUBSTRING(email, 1, 3) AS email_prefix
 FROM customer
 ORDER BY last_name ASC;
 
