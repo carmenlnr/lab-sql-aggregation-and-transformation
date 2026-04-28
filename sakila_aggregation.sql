@@ -9,7 +9,7 @@ FROM film;
 -- 1.2 Duración media en horas y minutos
 SELECT 
     FLOOR(AVG(length) / 60) AS avg_hours,
-    ROUND(AVG(length) % 60) AS avg_minutes
+    FLOOR(AVG(length)) - FLOOR(AVG(length) / 60) * 60 AS avg_minutes
 FROM film;
 
 -- 2. Insight de rental
@@ -35,7 +35,7 @@ LIMIT 20;
 -- 3. Titulos y duración de alquiler, NULL reemplazado por 'Not available'
 SELECT 
     title,
-    IFNULL(CAST(rental_duration AS CHAR), 'Not Available') AS rental_duration
+    IFNULL(rental_duration, 'Not Available') AS rental_duration
 FROM film
 ORDER BY title ASC;
 
@@ -48,7 +48,7 @@ ORDER BY last_name ASC;
 
 -- Challenge 2
 -- 1.1 Total peliculas lanzadas
-SELECT COUNT(film_id) AS total_films
+SELECT COUNT(*) AS total_films
 FROM film;
 -- 1.2 Numero peliculas por clasificacion
 SELECT 
@@ -83,4 +83,4 @@ HAVING mean_duration > 120;
 SELECT last_name
 FROM actor
 GROUP BY last_name
-HAVING COUNT(last_name) = 1;
+HAVING COUNT(*) = 1;
